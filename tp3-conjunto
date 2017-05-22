@@ -1,0 +1,161 @@
+class _Nodo:
+	def __init__(self,dato=None,prox=None):
+		self.dato = dato
+		self.prox = prox
+	def __str__(self):
+		return str(self.dato)
+
+class ListaEnlazada:
+	def __init__(self):
+		self.prim = None
+		self.len = 0
+	
+	def pop(self, i=None ):
+		if i is None:
+			i = self.len - 1
+		if i < 0 or i > self.len:
+			raise IndexError("Indice fuera de rango")
+		if i == 0:
+			dato = self.prim.dato
+			self.prim = self.prim.prox
+		else:
+			n_ant = self.prim
+			n_act = n_ant.prox
+			for pos in range(1, i):
+				n_ant = n_act
+				n_act = n_ant.prox
+
+			dato = n_act.dato
+			n_ant.prox = n_act.prox
+		self.len -= 1
+		return dato
+
+	def remove(self,x):
+		if self.len == 0:
+			raise ValueError("Lista vacia")
+		if self.prim.dato == x:
+			self.prim=self.prim.prox
+		else:
+			n_ant = self.prim
+			n_act = n_ant.prox
+			while n_act is not None and n_act.dato != x:
+				n_ant = n_act
+				n_act = n_ant.prox
+			if n_act == None:
+				raise ValueError("El valor no esta en la lista")
+
+			n_ant.prox = n_act.prox
+		self.len -= 1
+
+
+	def insert(self,i,x):
+		if i < 0 or i > self.len:
+			raise IndexError("Posicion invalida")
+
+		nuevo = _Nodo(x)
+
+		if i == 0:
+			nuevo.prox = self.prim
+			self.prim = nuevo
+
+		else:
+			n_ant = self.prim
+			for pos in range(1, i):
+				n_ant = n_ant.prox
+			nuevo.prox = n_ant.prox
+			n_ant.prox = nuevo
+
+		self.len += 1
+
+
+	def append(self,x):
+		nuevo = _Nodo(x)
+
+		if self.len == 0:
+			self.prim = nuevo
+		
+		else:
+			n_ant = self.prim
+			while n_ant.prox != None:
+				n_ant = n_ant.prox
+			n_ant.prox = nuevo
+
+		self.len +=1
+
+
+	def index(self,x):
+		if self.prim.dato == x:
+			return 0
+
+		n_ant = self.prim
+		contador = 1
+		while n_ant.prox != None and n_ant.prox.dato != x:
+			n_ant = n_ant.prox
+			contador += 1
+		if n_ant.prox is None:
+			raise ValueError("No se encuentra el elemento en la lista")
+
+		return contador
+
+	def __iter__(self):
+		return _IteradorLE(self.prim)
+
+
+class Cola:
+	def __init__(self):
+		self.primero = None
+		self.ultimo = None
+		
+	def esta_vacia(self):
+		return (self.primero is None)
+
+	def encolar(self,x):
+		nuevo = _Nodo(x)
+		if self.ultimo is not None:
+			self.ultimo.prox = nuevo
+			self.ultimo = nuevo
+		else:
+			self.primero = nuevo
+			self.ulitmo = nuevo
+
+	def desencolar(self):
+		if self.primero is None:
+			raise ValueError("La cola esta vacia")
+		valor = self.primero.dato
+		self.primero = self.primero.prox
+		if not self.primero:
+			self.ultimo=None
+		return valor
+
+class _IteradorLE:
+    
+    def __init__(self,prim):
+        self.actual=prim
+        
+    def __next__(self):
+        if not self.actual:
+            raise StopIteration
+        dato=self.actual.dato
+        self.actual=self.actual.prox
+        return dato
+
+
+class Cancion:
+	def __init__(self):
+		self.track = Cola()
+		self.marcas = ListaEnlazada()
+		self.cursor = None
+
+	def agregar_track(self,track):
+		self.track.encolar(track)
+
+
+
+
+	def moverse(self,parametro):
+		n_ant = self.prim
+		n_act = n_ant.prox
+		while n_ant.prox != cursor:
+			n_ant = n_act
+			n_act = n_ant.prox
+		cursor = n_ant
