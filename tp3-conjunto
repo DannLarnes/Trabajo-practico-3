@@ -82,6 +82,19 @@ class ListaEnlazada:
 
 		self.len +=1
 
+	def ir_ultimo(self):
+		n_act = self.prim
+		while n_act.prox != None:
+			n_act = n_act.prox
+		return n_act
+
+	def ir_posicion(self,i):
+		n_act = self.prim
+		for pos in range(1,i):
+			n_act = n_act.prox
+		return n_act
+
+
 
 	def index(self,x):
 		if self.prim.dato == x:
@@ -139,18 +152,46 @@ class _IteradorLE:
         self.actual=self.actual.prox
         return dato
 
+class _Marca:
+	def __init__(self,tiempo):
+		self.tiempo = tiempo
+		self.audio = []
+
+	def agregar_audio(self,x):
+		"""interaccion usuario"""
+		self.audio.append(x)
+
+	def modificar_audio(self,posicion,x):
+		self.audio[posicion] = x
+
+
+
 
 class Cancion:
 	def __init__(self):
-		self.track = Cola()
+		self.tracks = ListaEnlazada()
 		self.marcas = ListaEnlazada()
+		self.canales = 0
 		self.cursor = None
 
-	def agregar_track(self,track):
-		self.track.encolar(track)
+
+	def agregar_track(self,track,posicion=None):
+		if posicion is None:
+			self.tracks.append(track)
+		else:
+			self.tracks.insert(posicion,track)
+		self.canales += 1
 
 
-
+	def agregar_marca(self,tiempo,marca,posicion=None):
+		Nuevo  = _Marca(tiempo)
+		Nuevo.agregar_audio(marca)
+		if posicion is None:
+			self.marcas.append(Nuevo)
+			self.cursor = ir_ultimo()
+		else:
+			self.marcas.insert(posicion,Nuevo)
+			self.cursor = ir_posicion(posicion)
 
 	def moverse(self,parametro):
 		n_ant = self.prim
@@ -159,3 +200,4 @@ class Cancion:
 			n_ant = n_act
 			n_act = n_ant.prox
 		cursor = n_ant
+
