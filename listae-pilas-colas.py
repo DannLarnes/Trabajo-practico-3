@@ -116,3 +116,51 @@ class _IteradorLE:
         return dato
 
 #pila
+class Pila:
+	'''...'''
+	def __init__(self):
+		'''...'''
+		self.contenido=[]
+		
+	def apilar(self,elem):
+		'''...'''
+		self.contenido.append(elem)
+		
+	def esta_vacia(self):
+		'''..'''
+		return len(self.contenido)==0
+		
+	def desapilar(self):
+		'''...'''
+		if self.esta_vacia():
+			raise Exception('la pila esta vacia')
+		return self.contenido.pop()
+		
+	def ver_tope(self):
+		'''...'''
+		if self.esta_vacia():
+			raise Exception('la pila esta vacia')
+		return self.contenido[-1]
+#Cola
+def Cola:
+	'''...'''
+	def __init__(self):
+		self.prim=None
+		self.ult=None
+		
+	def esta_vacia(self):
+		return (not self.prim and not self.ultimo)
+		
+	def ver_primero(self):
+		if self.esta.vacia():
+			raise Exception('cola vacia')
+		return self.primero.dato
+		
+	def encolar(self.elem):
+		nodo=_Nodo(elem)
+		if self.estavacia():
+			self.prim=nodo
+			self.ult=nodo
+		else:
+			self.ultimo.prox=nodo
+			self.ultimo=nodo	
