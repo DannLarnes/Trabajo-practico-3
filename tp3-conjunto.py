@@ -320,16 +320,17 @@ class Reproductor:
 			nombre=nom_cancion
 		self.reiniciar_cursor()
 		with open(nombre,'w') as archivo:
-			archivo.write('Field,Data')
-			archivo.write('C,{}'.format(self.canales))
+			archivo.write('Field,Data\n')
+			archivo.write('C,{}\n'.format(len(self.cancion.tracks)))
 			for track in self.cancion.tracks:
-				archivo.write('S,{}|{}|{}'.format(track.fun,track.frec,track.vol))
+				archivo.write('S,{}|{}|{}\n'.format(track.fun,track.frec,track.vol))
 			tiempos=Pila()
+			tiempos.apilar(0)
 			for marca in self.cancion.marcas:
 				if marca.tiempo!=tiempos.ver_tope():
-					archivo.write('T,{}'.format(marca.tiempo))
+					archivo.write('T,{}\n'.format(marca.tiempo))
 				tiempos.apilar(marca.tiempo)
-				archivo.write('N,{}'.format(''.join(marca.audio)))
+				archivo.write('N,{}\n'.format(''.join(marca.audio)))
 
 
 	def crear_cancion(self):
