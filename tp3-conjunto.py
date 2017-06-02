@@ -269,7 +269,7 @@ class Cancion:
 		try:
 			while parametro>0:
 				self.pos.anterior()
-				parametro=-1
+				parametro-=1
 		except StopIteration:
 			return	
 
