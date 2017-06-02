@@ -259,7 +259,7 @@ class Cancion:
 
 	def mov_adelante(self,parametro=1):
 		try :
-			while parametro:
+			while parametro>0:
 				self.pos.__next__()
 				parametro -=1
 		except StopIteration:
@@ -267,8 +267,9 @@ class Cancion:
 
 	def mov_atras(self,parametro=1):
 		try:
-			while parametro:
+			while parametro>0:
 				self.pos.anterior()
+				parametro=-1
 		except StopIteration:
 			return	
 
